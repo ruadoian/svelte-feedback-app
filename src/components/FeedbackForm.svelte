@@ -1,11 +1,9 @@
 <script>
-   import {createEventDispatcher} from 'svelte' 
-   import {v4 as uuidv4} from 'uuid'
-   import Button from './Button.svelte'
+    import {FeedbackStore} from '../Stores'
+    import {v4 as uuidv4} from 'uuid'
+    import Button from './Button.svelte'
     import Card from './Card.svelte'
     import RatingSelect from "./RatingSelect.svelte"
-
-    const dispatch = createEventDispatcher()
 
     let text = ''
     let rating = 0
@@ -32,12 +30,13 @@
                 rating: +rating
             }
 
-            dispatch('new-rating',newFeedback)
+            FeedbackStore.update(currentFeedback =>{
+                return [newFeedback,...currentFeedback]
+            })
 
             text = ''
         }
     }
-    
 </script>
 
 <Card>
